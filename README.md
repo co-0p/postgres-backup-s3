@@ -17,7 +17,7 @@ services:
       POSTGRES_PASSWORD: password
 
   backup:
-    image: bartels/postgres-backup-s3:18
+    image: c0op/postgres-backup-s3:18
     environment:
       SCHEDULE: '@weekly'     # optional
       BACKUP_KEEP_DAYS: 7     # optional
