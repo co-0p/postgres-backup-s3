@@ -4,7 +4,7 @@ This project provides Docker images to periodically back up a PostgreSQL databas
 > This is a fork of [eeshugerman's](https://github.com/eeshugerman/postgres-backup-s3), and then [alexanderbartels'](https://github.com/alexanderbartels/postgres-backup-s3)
 > version of **postgres-backup-s3**, simply updated to support Postgres18.
 >  You can see the first fork [dif here](https://github.com/eeshugerman/postgres-backup-s3/compare/master...alexanderbartels:postgres-backup-s3:master),
-> and the second fork [dif here](TODO)
+> and the second fork [dif here](https://github.com/alexanderbartels/postgres-backup-s3/compare/master...co-0p:postgres-backup-s3:master).
 
 # Usage
 ## Backup
