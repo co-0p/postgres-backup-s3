@@ -17,6 +17,7 @@ jobs:
           - { postgres: 15, alpine: '3.17' }
           - { postgres: 16, alpine: '3.19' }
           - { postgres: 17, alpine: '3.21' }
+          - { postgres: 18, alpine: '3.23' }
 
     steps:
       - name: Checkout repository
@@ -39,7 +40,7 @@ jobs:
         with:
           context: .
           push: true
-          tags: bartels/postgres-backup-s3:${{ matrix.postgres }}
+          tags: ${{ secrets.DOCKERHUB_USERNAME }}/postgres-backup-s3:${{ matrix.postgres }}
           build-args: |
             ALPINE_VERSION=${{ matrix.alpine }}
           platforms: |

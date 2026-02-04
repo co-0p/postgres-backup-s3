@@ -1,18 +1,23 @@
 # Introduction
 This project provides Docker images to periodically back up a PostgreSQL database to AWS S3, and to restore from the backup as needed.
 
+> This is a fork of [eeshugerman's](https://github.com/eeshugerman/postgres-backup-s3), and then [alexanderbartels'](https://github.com/alexanderbartels/postgres-backup-s3)
+> version of **postgres-backup-s3**, simply updated to support Postgres18.
+>  You can see the first fork [dif here](https://github.com/eeshugerman/postgres-backup-s3/compare/master...alexanderbartels:postgres-backup-s3:master),
+> and the second fork [dif here](TODO)
+
 # Usage
 ## Backup
 ```yaml
 services:
   postgres:
-    image: postgres:17
+    image: postgres:18
     environment:
       POSTGRES_USER: user
       POSTGRES_PASSWORD: password
 
   backup:
-    image: bartels/postgres-backup-s3:17
+    image: bartels/postgres-backup-s3:18
     environment:
       SCHEDULE: '@weekly'     # optional
       BACKUP_KEEP_DAYS: 7     # optional
@@ -28,7 +33,7 @@ services:
       POSTGRES_PASSWORD: password
 ```
 
-- Images are tagged by the major PostgreSQL version supported: `12`, `13`, `14`, `15` or `16` or `17`.
+- Images are tagged by the major PostgreSQL version supported: `12`, `13`, `14`, `15`, `16`, `17`, or `18`.
 - The `SCHEDULE` variable determines backup frequency. See go-cron schedules documentation [here](http://godoc.org/github.com/robfig/cron#hdr-Predefined_schedules). Omit to run the backup immediately and then exit.
 - If `PASSPHRASE` is provided, the backup will be encrypted using GPG.
 - Run `docker exec <container name> sh backup.sh` to trigger a backup ad-hoc.
@@ -66,22 +71,5 @@ docker compose up -d
 ```
 
 # Acknowledgements
-This project is a fork and re-structuring of @schickling's [postgres-backup-s3](https://github.com/schickling/dockerfiles/tree/master/postgres-backup-s3) and [postgres-restore-s3](https://github.com/schickling/dockerfiles/tree/master/postgres-restore-s3).
+This project is a fork and re-structuring of @schickling's, then @eeshugerman's, then @alexanderbartels' projects.
 
-## Fork goals
-These changes would have been difficult or impossible merge into @schickling's repo or similarly-structured forks.
-  - dedicated repository
-  - automated builds
-  - support multiple PostgreSQL versions
-  - backup and restore with one image
-
-## Other changes and features
-  - some environment variables renamed or removed
-  - uses `pg_dump`'s `custom` format (see [docs](https://www.postgresql.org/docs/10/app-pgdump.html))
-  - drop and re-create all database objects on restore
-  - backup blobs and all schemas by default
-  - no Python 2 dependencies
-  - filter backups on S3 by database name
-  - support encrypted (password-protected) backups
-  - support for restoring from a specific backup by timestamp
-  - support for auto-removal of old backups
