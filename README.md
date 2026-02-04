@@ -9,14 +9,16 @@ This project provides Docker images to periodically back up a PostgreSQL databas
 # Usage
 ## Backup
 ```yaml
+version: '3.8'
 services:
   postgres:
     image: postgres:18
     environment:
       POSTGRES_USER: user
       POSTGRES_PASSWORD: password
+  # Remember to tune your shared buffers when using any dockerized postgres
 
-  backup:
+  pg_backup:
     image: c0op/postgres-backup-s3:18
     environment:
       SCHEDULE: '@weekly'     # optional
@@ -42,7 +44,7 @@ services:
 
 ## Restore
 > [!CAUTION]
-> DATA LOSS! All database objects will be dropped and re-created.
+> DATA LOSS POTENTIAL! All database objects will be dropped and re-created.
 
 ### ... from latest backup
 ```sh
